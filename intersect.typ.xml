@@ -1,0 +1,4 @@
+<types>
+   <type id="in" priority="1" numLanes="1" speed="25"/>
+   <type id="out" priority="1" numLanes="1" speed="20"/>
+</types>

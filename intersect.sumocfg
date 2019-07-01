@@ -1,0 +1,11 @@
+<configuration>
+    <input>
+        <net-file value="intersect.net.xml"/>
+        <route-files value="intersect.rou.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <step-length value="0.1"/>
+    </time>
+</configuration>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+	<copy file="intersect.net.xml" />
+	<copy file="intersect.rou.xml" />
+	<copy file="intersect.settings.xml" />
+	<copy file="intersect.sumocfg" type="config" />
+</launch>

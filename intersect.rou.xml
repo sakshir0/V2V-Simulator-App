@@ -1,0 +1,39 @@
+<routes>
+        <!--vehicle types-->
+        <vType id="fast" accel="0.8" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="25"  color="1,.3,.3"/>
+        <vType id="slow" accel="0.8" decel="4.5" sigma="0.5" length="7" minGap="3" maxSpeed="15"  color="1,.3,.3"/>
+
+		<!--straight-->
+        <route id="straightFromLeft" edges="51o 1i 2o 52i" />
+        <route id="straightFromRight" edges="52o 2i 1o 51i" />
+        <route id="straightFromUp" edges="54o 4i 3o 53i" />
+        <route id="straightFromDown" edges="53o 3i 4o 54i" />
+        
+        <!--right turns-->
+        <route id="rightFromLeft" edges="51o 1i 3o 53i" />
+        <route id="rightFromRight" edges="52o 2i 4o 54i" />
+        <route id="rightFromUp" edges="54o 4i 1o 51i" />
+        <route id="rightFromDown" edges="53o 3i 2o 52i" />
+        
+        <!--left turns-->
+        <route id="LeftFromLeft" edges="51o 1i 4o 54i" />
+        <route id="LeftFromRight" edges="52o 2i 3o 53i" />
+        <route id="LeftFromUp" edges="54o 4i 2o 52i" />
+        <route id="LeftFromDown" edges="53o 3i 1o 51i" />
+        
+		<!--vehicles-->
+        <vehicle id="straightFromLeft0" type="fast" route="straightFromLeft" depart="0" />
+        <vehicle id="straightFromUp0" type="fast" route="straightFromUp" depart="0" />
+        <vehicle id="straightFromRight0" type="fast" route="straightFromRight" depart="0" />
+        <vehicle id="straightFromDown0" type="fast" route="straightFromDown" depart="0" /> 
+        
+        <vehicle id="rightFromLeft0" type="fast" route="rightFromLeft" depart="2" />
+        <vehicle id="rightFromRight0" type="fast" route="rightFromRight" depart="2" />
+        <vehicle id="rightFromUp0" type="fast" route="rightFromUp" depart="2" />
+        <vehicle id="rightFromDown0" type="fast" route="rightFromDown" depart="2" />
+        
+        <vehicle id="LeftFromLeft0" type="fast" route="LeftFromLeft" depart="4" />
+        <vehicle id="LeftFromRight0" type="fast" route="LeftFromRight" depart="4" />
+        <vehicle id="LeftFromUp0" type="fast" route="LeftFromUp" depart="4" />
+        <vehicle id="LeftFromDown0" type="fast" route="LeftFromDown" depart="4" />  
+</routes>
