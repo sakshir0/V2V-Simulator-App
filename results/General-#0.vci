@@ -1,0 +1,74 @@
+file 2714 1562093158                                            
+version 2
+run General-0-20190702-14:33:53-17556
+attr configname General
+attr datetime 20190702-14:33:53
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network TutorialScenario
+attr processid 17556
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.debug false
+param **.coreDebug false
+param *.playgroundSizeX 2500m
+param *.playgroundSizeY 2500m
+param *.playgroundSizeZ 50m
+param *.annotations.draw true
+param *.manager.updateInterval 1s
+param *.manager.host "\"localhost\""
+param *.manager.port 9999
+param *.manager.autoShutdown true
+param *.manager.launchConfig "xmldoc(\"intersect.launchd.xml\")"
+param *.rsu[0].mobility.x 2000
+param *.rsu[0].mobility.y 2000
+param *.rsu[0].mobility.z 3
+param *.rsu[*].applType "\"TutorialAppl\""
+param *.rsu[*].appl.headerLength "80 bit"
+param *.rsu[*].appl.sendBeacons false
+param *.rsu[*].appl.dataOnSch false
+param *.rsu[*].appl.beaconInterval 1s
+param *.rsu[*].appl.beaconUserPriority 7
+param *.rsu[*].appl.dataUserPriority 5
+param *.connectionManager.sendDirect true
+param *.connectionManager.maxInterfDist 2600m
+param *.connectionManager.drawMaxIntfDist false
+param *.**.nic.mac1609_4.useServiceChannel false
+param *.**.nic.mac1609_4.txPower 20mW
+param *.**.nic.mac1609_4.bitrate 6Mbps
+param *.**.nic.phy80211p.sensitivity -89dBm
+param *.**.nic.phy80211p.useThermalNoise true
+param *.**.nic.phy80211p.thermalNoise -110dBm
+param *.**.nic.phy80211p.decider "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.analogueModels "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.usePropagationDelay true
+param *.**.nic.phy80211p.antenna "xmldoc(\"antenna.xml\", \"/root/Antenna[@id='monopole']\")"
+param *.node[*].applType "\"TutorialAppl\""
+param *.node[*].appl.headerLength "80 bit"
+param *.node[*].appl.sendBeacons false
+param *.node[*].appl.dataOnSch false
+param *.node[*].appl.beaconInterval 1s
+param *.node[*].veinsmobilityType.debug true
+param *.node[*].veinsmobility.x 0
+param *.node[*].veinsmobility.y 0
+param *.node[*].veinsmobility.z 1.895
+
+vector 0 TutorialScenario.node[0].veinsmobility posx ETV
+vector 1 TutorialScenario.node[0].veinsmobility posy ETV
+vector 2 TutorialScenario.node[1].veinsmobility posx ETV
+vector 3 TutorialScenario.node[1].veinsmobility posy ETV
+vector 4 TutorialScenario.node[0].veinsmobility speed ETV
+vector 5 TutorialScenario.node[1].veinsmobility speed ETV
+0	2518 46 2 3 1 2 2 30.422187683101 30.422187683101 60.844375366201 1851.0190068516
+1	2564 28 2 3 1 2 2 136.65 136.65 273.3 37346.445
+2	2592 46 2 3 1 2 2 239.57464268111 239.57464268111 479.14928536223 114792.01883157
+3	2638 28 2 3 1 2 2 133.35 133.35 266.7 35564.445
+4	2666 23 3 3 2 2 1 1.2109725133778 1.2109725133778 1.2109725133778 1.4664544281565
+5	2689 23 3 3 2 2 1 1.2341948287431 1.2341948287431 1.2341948287431 1.5232368752962
+

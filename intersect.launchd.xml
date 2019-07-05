@@ -3,5 +3,5 @@
 	<copy file="intersect.net.xml" />
 	<copy file="intersect.rou.xml" />
 	<copy file="intersect.settings.xml" />
-	<copy file="intersect.sumocfg" type="config" />
+	<copy file="intersect.sumo.cfg" type="config" />
 </launch>

@@ -23,10 +23,14 @@
         
 		<!--vehicles-->
         <vehicle id="straightFromLeft0" type="fast" route="straightFromLeft" depart="0" />
-        <vehicle id="straightFromUp0" type="fast" route="straightFromUp" depart="0" />
         <vehicle id="straightFromRight0" type="fast" route="straightFromRight" depart="0" />
-        <vehicle id="straightFromDown0" type="fast" route="straightFromDown" depart="0" /> 
         
+        <!--
+        <vehicle id="straightFromUp0" type="fast" route="straightFromUp" depart="0" />
+        <vehicle id="straightFromDown0" type="fast" route="straightFromDown" depart="0" /> 
+        -->
+        
+        <!--
         <vehicle id="rightFromLeft0" type="fast" route="rightFromLeft" depart="2" />
         <vehicle id="rightFromRight0" type="fast" route="rightFromRight" depart="2" />
         <vehicle id="rightFromUp0" type="fast" route="rightFromUp" depart="2" />
@@ -35,5 +39,6 @@
         <vehicle id="LeftFromLeft0" type="fast" route="LeftFromLeft" depart="4" />
         <vehicle id="LeftFromRight0" type="fast" route="LeftFromRight" depart="4" />
         <vehicle id="LeftFromUp0" type="fast" route="LeftFromUp" depart="4" />
-        <vehicle id="LeftFromDown0" type="fast" route="LeftFromDown" depart="4" />  
+        <vehicle id="LeftFromDown0" type="fast" route="LeftFromDown" depart="4" /> 
+        --> 
 </routes>
