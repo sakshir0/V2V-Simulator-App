@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include "veins/base/utils/Coord.h"
 
 Define_Module(TutorialAppl);
 
@@ -16,11 +17,14 @@ void TutorialAppl::initialize(int stage) {
 
 void TutorialAppl::onISM(IntersectMessage* ism) {
     findHost()->getDisplayString().updateWith("r=16,green");
+    /*
+     * this code won't work because you are comparing type id with real id
     std::string id = "straightFromLeft0";
     if ((id.compare(traciVehicle->getTypeId())) == 0) {
         traciVehicle->setSpeedMode(0000);
         traciVehicle->setSpeed(0.0);
     }
+    */
 }
 
 void TutorialAppl::handleSelfMsg(cMessage* msg) {
@@ -33,7 +37,7 @@ void TutorialAppl::handleSelfMsg(cMessage* msg) {
 }
 
 void TutorialAppl::handleLowerMsg(cMessage* msg) {
-    std::cout << "new handle  lower msg" << std::endl;
+    //std::cout << "new handle  lower msg" << std::endl;
     IntersectMessage* ism = dynamic_cast<IntersectMessage*>(msg);
     onISM(ism);
     delete(msg);
@@ -114,13 +118,35 @@ IntersectMessage* TutorialAppl::populateISM(IntersectMessage *ism, bool passed) 
     return ism;
 }
 
+
 void TutorialAppl::handlePositionUpdate(cObject* obj) {
     BaseWaveApplLayer::handlePositionUpdate(obj);
-    //if car is certain distance away from intersection, they can only
-    //move if they are currently allowed to go otherwise speed goes to 0
     if (simTime() - lastSent >= 1) {
+        //get distance between car and junction
+        Coord juncPos = traci->junction("0").getPosition();
+        Coord pos = mobility->getPositionAt(simTime());
+        double distance = pos.distance(juncPos);
+        std::string roadId = traciVehicle->getRoadId();
+        //if they cannot go through intersection, will slow down
+        /*
+        if (distance <= 20.0 && !canGo) {
+            traciVehicle->slowDown(0, 1000);
+        }
+        //otherwise they will go through intersection
+        else if (canGo) {
+            traciVehicle->slowDown(20, 500);
+        }
+        */
+        //create new msg to RSU and send it
         IntersectMessage* ism = new IntersectMessage();
-        ism = populateISM(ism, false);
+        //if they have passed intersection they will let RSU know
+        if (roadId == "1o" || roadId == "2o" ||
+            roadId == "3o" || roadId == "4o") {
+            ism = populateISM(ism, true);
+        }
+        else {
+            ism = populateISM(ism, false);
+        }
         sendDown(ism);
         lastSent = simTime();
     }

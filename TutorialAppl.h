@@ -4,7 +4,8 @@
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 #include "IntersectMessage_m.h"
 
-
+//for debugging
+#include <iostream>
 
 class TutorialAppl : public BaseWaveApplLayer {
     public:
