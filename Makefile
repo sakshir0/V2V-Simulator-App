@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for V2V-Simulator-App
 #
 # This file was generated with the command:
-#  opp_makemake
+#  opp_makemake -f --deep -O out
 #
 
 # Name of target to be created (-o option)
@@ -30,13 +30,12 @@ PROJECTRELATIVE_PATH =
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = \
-	$O/IntersectMessage_m.o \
-	$O/TutorialApp.o
+OBJS = $O/TutorialApp.o $O/IntersectMessage_m.o $O/RSUMessage_m.o
 
 # Message files
 MSGFILES = \
-    IntersectMessage.msg
+    IntersectMessage.msg \
+    RSUMessage.msg
 
 # SM files
 SMFILES =

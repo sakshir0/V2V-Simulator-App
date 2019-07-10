@@ -1,0 +1,95 @@
+file 33554 1562792141                                           
+version 2
+run WithChannelSwitching-0-20190710-16:55:23-15660
+attr configname WithChannelSwitching
+attr datetime 20190710-16:55:23
+attr experiment WithChannelSwitching
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network TutorialScenario
+attr processid 15660
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param *.**.nic.mac1609_4.useServiceChannel true
+param *.node[*].appl.dataOnSch true
+param *.rsu[*].appl.dataOnSch true
+param **.debug false
+param **.coreDebug false
+param *.playgroundSizeX 2500m
+param *.playgroundSizeY 2500m
+param *.playgroundSizeZ 50m
+param *.annotations.draw true
+param *.manager.updateInterval 1s
+param *.manager.host "\"localhost\""
+param *.manager.port 9999
+param *.manager.autoShutdown true
+param *.manager.launchConfig "xmldoc(\"intersect.launchd.xml\")"
+param *.rsu[0].mobility.x 135
+param *.rsu[0].mobility.y 135
+param *.rsu[0].mobility.z 0
+param *.rsu[*].applType "\"TutorialAppl\""
+param *.rsu[*].appl.headerLength "80 bit"
+param *.rsu[*].appl.sendBeacons false
+param *.rsu[*].appl.dataOnSch false
+param *.rsu[*].appl.beaconInterval 1s
+param *.rsu[*].appl.beaconUserPriority 1
+param *.rsu[*].appl.dataUserPriority 1
+param *.connectionManager.sendDirect true
+param *.connectionManager.maxInterfDist 2600m
+param *.connectionManager.drawMaxIntfDist false
+param *.**.nic.mac1609_4.useServiceChannel false
+param *.**.nic.mac1609_4.txPower 20mW
+param *.**.nic.mac1609_4.bitrate 6Mbps
+param *.**.nic.phy80211p.sensitivity -89dBm
+param *.**.nic.phy80211p.useThermalNoise true
+param *.**.nic.phy80211p.thermalNoise -110dBm
+param *.**.nic.phy80211p.decider "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.analogueModels "xmldoc(\"config.xml\")"
+param *.**.nic.phy80211p.usePropagationDelay true
+param *.**.nic.phy80211p.antenna "xmldoc(\"antenna.xml\", \"/root/Antenna[@id='monopole']\")"
+param *.node[*].applType "\"TutorialAppl\""
+param *.node[*].appl.headerLength "80 bit"
+param *.node[*].appl.sendBeacons false
+param *.node[*].appl.dataOnSch false
+param *.node[*].appl.beaconInterval 1s
+param *.node[*].veinsmobilityType.debug true
+param *.node[*].veinsmobility.x 0
+param *.node[*].veinsmobility.y 0
+param *.node[*].veinsmobility.z 1.895
+
+vector 0 TutorialScenario.node[0].veinsmobility posx ETV
+vector 1 TutorialScenario.node[0].veinsmobility posy ETV
+vector 2 TutorialScenario.node[1].veinsmobility posx ETV
+vector 3 TutorialScenario.node[1].veinsmobility posy ETV
+vector 4 TutorialScenario.node[0].veinsmobility speed ETV
+vector 5 TutorialScenario.node[2].veinsmobility posx ETV
+vector 6 TutorialScenario.node[2].veinsmobility posy ETV
+vector 7 TutorialScenario.node[0].veinsmobility acceleration ETV
+vector 8 TutorialScenario.node[0].veinsmobility co2emission ETV
+vector 9 TutorialScenario.node[1].veinsmobility speed ETV
+vector 10 TutorialScenario.node[1].veinsmobility acceleration ETV
+vector 11 TutorialScenario.node[1].veinsmobility co2emission ETV
+vector 12 TutorialScenario.node[2].veinsmobility speed ETV
+vector 13 TutorialScenario.node[2].veinsmobility acceleration ETV
+vector 14 TutorialScenario.node[2].veinsmobility co2emission ETV
+8	3250 610 244 7638 3 25 23 1.4436759343989 5.4934387893005 76.79684002996 291.80577815995
+7	3860 632 244 7638 3 25 23 0.59265405059792 0.75182619032448 16.254877513163 11.55116754618
+4	4492 634 100 7638 2 25 24 1.1454837240511 17.400361237214 217.07075538932 2553.2833512002
+1	5126 435 30 7638 1 25 25 133.35 133.35 3333.75 444555.5625
+0	5561 656 30 7638 1 25 25 46.815986647681 239.5826768364 4397.620554652 863432.26235347
+11	6217 2098 486 24440 4 106 103 0.973 3.2173128962971 131.63889921372 190.47675354622
+10	8315 3443 486 24440 4 106 103 -4.5 0.67733938177116 -1.1878645081059 47.011950368413
+9	11758 3292 244 24440 3 106 104 3.2043303557048e-090 10.162808526446 97.961823145708 671.64231679567
+3	15050 1956 100 24440 2 106 105 136.65 136.65 14348.25 1960688.3625
+2	17006 2886 100 24440 2 106 105 30.432670107841 128.55961648853 12261.486335598 1515288.3216284
+14	19892 2081 702 24440 5 106 102 0.973 3.1776364629292 130.63787971787 189.7487957914
+13	21973 3412 702 24440 5 106 102 -4.5 0.64491655429825 -1.247355799764 47.065097084007
+12	25385 3359 486 24440 4 106 103 3.6418032014295e-089 10.201419597338 98.666767110902 679.437395379
+6	28744 2868 244 24440 3 106 104 30.422387514822 129.31220391621 12202.920392088 1516280.8986027
+5	31612 1940 244 24440 3 106 104 133.35 133.35 13868.4 1849351.14
+

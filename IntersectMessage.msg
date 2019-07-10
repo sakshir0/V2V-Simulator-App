@@ -16,6 +16,7 @@ packet IntersectMessage extends WaveShortMessage {
 	string vehicleId;
 	double senderSpeed;
 	Coord senderPos;
+	simtime_t timeSent;
 	string roadId; //what road the car is currently on
 	int direction @enum(directionType); //direction car wants to go
 	bool passed; //if the car has already passed the intersection or not

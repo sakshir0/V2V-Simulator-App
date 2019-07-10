@@ -49,6 +49,7 @@ enum directionType {
  *     string vehicleId;
  *     double senderSpeed;
  *     Coord senderPos;
+ *     simtime_t timeSent;
  *     string roadId; //what road the car is currently on
  *     int direction \@enum(directionType); //direction car wants to go
  *     bool passed; //if the car has already passed the intersection or not
@@ -61,6 +62,7 @@ class IntersectMessage : public ::WaveShortMessage
     ::omnetpp::opp_string vehicleId;
     double senderSpeed;
     Coord senderPos;
+    ::omnetpp::simtime_t timeSent;
     ::omnetpp::opp_string roadId;
     int direction;
     bool passed;
@@ -89,6 +91,8 @@ class IntersectMessage : public ::WaveShortMessage
     virtual Coord& getSenderPos();
     virtual const Coord& getSenderPos() const {return const_cast<IntersectMessage*>(this)->getSenderPos();}
     virtual void setSenderPos(const Coord& senderPos);
+    virtual ::omnetpp::simtime_t getTimeSent() const;
+    virtual void setTimeSent(::omnetpp::simtime_t timeSent);
     virtual const char * getRoadId() const;
     virtual void setRoadId(const char * roadId);
     virtual int getDirection() const;
