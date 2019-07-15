@@ -41,8 +41,8 @@ TutorialAppl::~TutorialAppl() {
  */
 
 void TutorialAppl::onISM(IntersectMessage* ism) {
-    if (isRSU && (ism->getVehicleId())[0] != '\0') {
-        //std::cout << ism->getVehicleId() << std::endl;
+    if (isRSU && ((ism->getVehicleId())[0] != '\0')) {
+        //std::cout << "cri1" << std::endl;
         findHost()->getDisplayString().updateWith("r=16,green");
         //if car has not yet passed intersection update info for RSU, o/w delete info
         if (!(ism->getPassed())) {
@@ -52,29 +52,32 @@ void TutorialAppl::onISM(IntersectMessage* ism) {
         else {
             removeData(ism);
         }
-
-        /*
-        std::cout << "begin" << endl;
-                for (auto const& j : RSUData) {
-                    std::cout << j->getVehicleId() << endl;
-                    std::cout << j->getTimeSent() << endl;
+        //every second, calculate who is allowed to go for RSU and send msg
+        //start should also have cars send at same sim time as that is how it is set in SUMO
+        if ((simTime() - lastSentRSU >= 1) && simTime() > 6.0) {
+            std::list<const char*> allowedList = calculateAllowedVehicles();
+            /*
+            std::cout << "dataStart" << endl;
+            for(auto&& msg: RSUData) {
+                std::cout << msg->getVehicleId() << endl;
             }
-        std::cout << "end" << endl;
-        */
-
-        //send message from RSU back to cars
-        std::list<const char*> allowedList;
-        std::list<const char*>::iterator it;
-        it = allowedList.begin();
-        //can't do this, remember char * get fucked up
-        const char* str1 = "straightFromRight0";
-        allowedList.insert (it,str1);
-
-        RSUMessage* rsm = new RSUMessage();
-        rsm->setAllowedVehiclesArraySize(allowedList.size());
-        rsm->setAllowedVehicles(0, allowedList.front());
-        sendDown(rsm);
-        //std::cout << "1" << endl;
+            std::cout << "dataEnd" << endl;
+            std::cout << "allowedListstart" << endl;
+            for(auto&& msg: allowedList) {
+                std::cout << msg << endl;
+            }
+            std::cout << "allowedListEnd" << endl;
+            */
+            RSUMessage* rsm = new RSUMessage();
+            rsm->setAllowedVehiclesArraySize(allowedList.size());
+            int i = 0;
+            for(auto&& allowed: allowedList) {
+                rsm->setAllowedVehicles(i, allowed);
+                ++i;
+            }
+            sendDown(rsm);
+            lastSentRSU = simTime();
+        }
     }
 }
 
@@ -121,10 +124,184 @@ void TutorialAppl::removeData(IntersectMessage* ism) {
     }
 }
 
-//calculates which vehicles are allowed to go through intersection
-std::list<std::string> TutorialAppl::calculateAllowedVehicles() {
-    if (isRSU) {
+//given list of vehicle msgs, figure out who has right of way based on yield to right rules,
+//return those people. if all four cars in intersection, break ties with right/left street.
+//for use with trying to figure out who gets to go first when multiple people trying to go straight
+std::vector<IntersectMessage*> TutorialAppl::yieldToRight(std::vector<IntersectMessage*> vehicles) {
+    bool haveSeen1 = false;
+    bool haveSeen2 = false;
+    bool haveSeen3 = false;
+    bool haveSeen4 = false;
+    std::string currPriority = "";
+    std::vector<IntersectMessage*> returnedVehicles;
+    for(auto&& msg: vehicles) {
+        std::string roadId = msg->getRoadId();
+        //keep track of which roads we have seen
+        if (roadId == "1i") {
+            haveSeen1 = true;
+        }
+        else if (roadId == "2i") {
+            haveSeen2 = true;
+        }
+        else if (roadId == "3i") {
+            haveSeen3 = true;
+        }
+        else {
+            haveSeen4 = true;
+        }
+    }
+    //if all four cars in intersection, break tie with left/right lane
+    if (haveSeen1 && haveSeen2 && haveSeen3 && haveSeen4) {
+        currPriority = "1i";
+    }
+    //priorities for vehicles
+    else if (haveSeen2 && !haveSeen4) {
+        currPriority = "2i";
+    }
+    else if (haveSeen1 && !haveSeen3) {
+        currPriority = "1i";
+    }
+    else if (haveSeen3 && !haveSeen2) {
+        currPriority = "3i";
+    }
+    else {
+        currPriority = "4i";
+    }
+    //figure out which vehicles are allowed to go based on which lane got priority
+    for(auto&& msg: vehicles) {
+        std::string roadId = msg->getRoadId();
+        if ((currPriority == "1i" || currPriority == "2i") &&
+            (roadId == "1i" || roadId == "2i")) {
+            returnedVehicles.push_back(msg);
+        }
+        else if ((currPriority == "3i" || currPriority == "4i") &&
+                 (roadId == "3i" || roadId == "4i")) {
+            returnedVehicles.push_back(msg);
+        }
+    }
+    return returnedVehicles;
+}
 
+std::list<const char*> TutorialAppl::getVehicleIds(std::vector<IntersectMessage*> vehicles) {
+    std::list<const char*> vehicleIds;
+    for(auto&& msg: vehicles) {
+        const char* vehicleId = msg->getVehicleId();
+        vehicleIds.push_back(vehicleId);
+    }
+    return vehicleIds;
+}
+
+//straight over turning and right over left
+std::list<const char*> TutorialAppl::priorityCars(std::vector<IntersectMessage*> vehicles) {
+    std::vector<IntersectMessage*> allowedVs;
+    //if anyone wants to go straight, they get first priority
+    for(auto&& msg: vehicles) {
+        int direction = msg->getDirection();
+        const char * roadId = msg->getRoadId();
+        if (direction == STRAIGHT) {
+            allowedVs.push_back(msg);
+        }
+    }
+
+
+    //if there are multiple people who wanted to go straight, we yield to right
+    allowedVs = yieldToRight(allowedVs);
+    std::cout << "allowedVs start" << endl;
+    /*
+    for(auto&& msg: allowedVs) {
+        std::cout << msg->getVehicleId() << endl;
+    }
+    std::cout << "allowedVs end" << endl;
+     */
+
+    //we can allow anyone who wants to turn right in same direction
+    //as people going straight to go
+
+    //if there were cars who wanted to go straight, check for right turns and return
+    if (!allowedVs.empty()) {
+        for(auto&& msg: vehicles) {
+            int direction = msg->getDirection();
+            std::string straightRoadId = (allowedVs.front())->getRoadId();
+            std::string roadId = msg->getRoadId();
+             if ((((straightRoadId == "1i" || straightRoadId == "2i") &&
+                 (roadId == "1i" || roadId == "2i")) ||
+                ((straightRoadId == "3i" || straightRoadId == "4i") &&
+                 (roadId == "3i" || roadId == "4i"))) &&
+                direction == RIGHT) {
+                allowedVs.push_back(msg);
+            }
+        }
+        return getVehicleIds(allowedVs);
+    }
+
+
+    //no one wants to go straight, allow all right turns to go
+    else {
+        for(auto&& msg: vehicles) {
+            int direction = msg->getDirection();
+            if (direction == RIGHT) {
+                allowedVs.push_back(msg);
+            }
+        }
+    }
+    //with right turns present, can also allow left turns to go
+    //if they are not turning onto same lane as right
+    if (!allowedVs.empty()) {
+        //get lanes that are not allowed
+        bool is1Or2 = false;
+        for (auto&&msg: allowedVs) {
+            std::string roadId = msg->getRoadId();
+            if (roadId == "1i" || roadId == "2i") {
+                is1Or2 = true;
+            }
+        }
+        //check if anyone wants to turn left from that lane
+        for(auto&& msg: vehicles) {
+            int direction = msg->getDirection();
+            std::string roadId = msg->getRoadId();
+            if (direction == RIGHT) {
+                if ((roadId == "1i" || roadId == "2i") && !is1Or2) {
+                    allowedVs.push_back(msg);
+                }
+                else if ((roadId == "3i" || roadId == "4i") && is1Or2) {
+                    allowedVs.push_back(msg);
+                }
+            }
+        }
+        return getVehicleIds(allowedVs);
+    }
+    //no one wanted to turn straight or right, check if anyone wants to turn left
+    //only one person can go when trying to turn left at a time
+    for(auto&& msg: vehicles) {
+        int direction = msg->getDirection();
+        if (direction == LEFT) {
+            allowedVs.push_back(msg);
+            break;
+        }
+    }
+    return getVehicleIds(allowedVs);
+}
+
+//calculates which vehicles are allowed to go through intersection
+std::list<const char*> TutorialAppl::calculateAllowedVehicles() {
+    std::list<const char*> allowedVehicles;
+    //someone has requested to go through intersection
+    if (!RSUData.empty()) {
+        //get all vehicles who sent message at same time
+        auto it = RSUData.begin();
+        std::vector<IntersectMessage*> vehicleMsgs;
+        //all cars that can go at same time
+        simtime_t earliest = (RSUData.front())->getTimeSent();
+        while (it != RSUData.end() && ((*it)->getTimeSent() - earliest) < 0.01) {
+            vehicleMsgs.push_back((*it));
+            it++;
+        }
+        allowedVehicles = priorityCars(vehicleMsgs);
+        return allowedVehicles;
+    }
+    //no one wants to go, return empty list
+    else {
+        return allowedVehicles;
     }
 }
 
@@ -135,7 +312,6 @@ std::list<std::string> TutorialAppl::calculateAllowedVehicles() {
 void TutorialAppl::onRSM(RSUMessage *rsm) {
     if (!isRSU) {
         findHost()->getDisplayString().updateWith("r=16,blue");
-
         std::string vehicleId = mobility->getExternalId().c_str();
         for (int i=0; i < rsm->getAllowedVehiclesArraySize(); ++i) {
             if (rsm->getAllowedVehicles(i) == vehicleId) {
@@ -240,8 +416,14 @@ void TutorialAppl::handlePositionUpdate(cObject* obj) {
         //create new msg to RSU and send it
         IntersectMessage* ism = new IntersectMessage();
         //if they have passed intersection they will let RSU know
+
+        std::cout << juncPos << endl;
+        std::cout << pos << endl;
+        std::cout << distance << endl;
+
         if (roadId == "1o" || roadId == "2o" ||
             roadId == "3o" || roadId == "4o") {
+            std::cout << "IM OUT" << endl;
             populateISM(ism, true);
         }
         else if (roadId == "1i" || roadId == "2i" ||

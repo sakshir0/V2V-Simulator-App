@@ -14,11 +14,15 @@ class TutorialAppl : public BaseWaveApplLayer {
     protected:
         ~TutorialAppl();
         //RSU
+        simtime_t lastSentRSU; //last time RSU sent msg
         std::vector<IntersectMessage*> RSUData;
         virtual void onISM(IntersectMessage* wsm);
         virtual void addData(IntersectMessage* ism);
         virtual void removeData(IntersectMessage* ism);
-        std::list<std::string> calculateAllowedVehicles();
+        std::vector<IntersectMessage*> yieldToRight(std::vector<IntersectMessage*> vehicles);
+        std::list<const char*> getVehicleIds(std::vector<IntersectMessage*> vehicles);
+        std::list<const char*> priorityCars(std::vector<IntersectMessage*> vehicles);
+        std::list<const char*> calculateAllowedVehicles();
 
         //Vehicles
         bool canGo; //if the car can go through intersection
@@ -28,7 +32,7 @@ class TutorialAppl : public BaseWaveApplLayer {
         virtual void handlePositionUpdate(cObject* obj);
 
         //General
-        simtime_t lastSent; // the last time sent a message
+        simtime_t lastSent; // the last time car sent a message
         bool isRSU; //if it is an RSU or a car
         virtual void handleSelfMsg(cMessage* msg);
         virtual void handleLowerMsg(cMessage *msg);
