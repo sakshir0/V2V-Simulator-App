@@ -14,6 +14,8 @@ void TutorialAppl::initialize(int stage) {
     if (stage == 0) {
         lastSent = simTime();
         canGo = false;
+        needToChange = true;
+        needToChange2 = true;
         //figuring out if it is an RSU
         std::string path = getFullPath();
         if (path.find("rsu") != std::string::npos) {
@@ -56,18 +58,6 @@ void TutorialAppl::onISM(IntersectMessage* ism) {
         //start should also have cars send at same sim time as that is how it is set in SUMO
         if ((simTime() - lastSentRSU >= 1) && simTime() > 6.0) {
             std::list<const char*> allowedList = calculateAllowedVehicles();
-            /*
-            std::cout << "dataStart" << endl;
-            for(auto&& msg: RSUData) {
-                std::cout << msg->getVehicleId() << endl;
-            }
-            std::cout << "dataEnd" << endl;
-            std::cout << "allowedListstart" << endl;
-            for(auto&& msg: allowedList) {
-                std::cout << msg << endl;
-            }
-            std::cout << "allowedListEnd" << endl;
-            */
             RSUMessage* rsm = new RSUMessage();
             rsm->setAllowedVehiclesArraySize(allowedList.size());
             int i = 0;
@@ -136,6 +126,7 @@ std::vector<IntersectMessage*> TutorialAppl::yieldToRight(std::vector<IntersectM
     std::vector<IntersectMessage*> returnedVehicles;
     for(auto&& msg: vehicles) {
         std::string roadId = msg->getRoadId();
+        //std::cout << roadId << endl;
         //keep track of which roads we have seen
         if (roadId == "1i") {
             haveSeen1 = true;
@@ -150,21 +141,27 @@ std::vector<IntersectMessage*> TutorialAppl::yieldToRight(std::vector<IntersectM
             haveSeen4 = true;
         }
     }
+
     //if all four cars in intersection, break tie with left/right lane
     if (haveSeen1 && haveSeen2 && haveSeen3 && haveSeen4) {
+        //std::cout << "1" << endl;
         currPriority = "1i";
     }
     //priorities for vehicles
     else if (haveSeen2 && !haveSeen4) {
+        //std::cout << "2" << endl;
         currPriority = "2i";
     }
     else if (haveSeen1 && !haveSeen3) {
+        //std::cout << "3" << endl;
         currPriority = "1i";
     }
     else if (haveSeen3 && !haveSeen2) {
+        //std::cout << "4" << endl;
         currPriority = "3i";
     }
     else {
+        //std::cout << "5" << endl;
         currPriority = "4i";
     }
     //figure out which vehicles are allowed to go based on which lane got priority
@@ -206,7 +203,6 @@ std::list<const char*> TutorialAppl::priorityCars(std::vector<IntersectMessage*>
 
     //if there are multiple people who wanted to go straight, we yield to right
     allowedVs = yieldToRight(allowedVs);
-    std::cout << "allowedVs start" << endl;
     /*
     for(auto&& msg: allowedVs) {
         std::cout << msg->getVehicleId() << endl;
@@ -247,39 +243,86 @@ std::list<const char*> TutorialAppl::priorityCars(std::vector<IntersectMessage*>
     //with right turns present, can also allow left turns to go
     //if they are not turning onto same lane as right
     if (!allowedVs.empty()) {
-        //get lanes that are not allowed
         bool is1Or2 = false;
+        bool is3Or4 = false;
         for (auto&&msg: allowedVs) {
             std::string roadId = msg->getRoadId();
             if (roadId == "1i" || roadId == "2i") {
                 is1Or2 = true;
+            }
+            else if (roadId == "3i" || roadId == "4i") {
+                is3Or4 = true;
             }
         }
         //check if anyone wants to turn left from that lane
         for(auto&& msg: vehicles) {
             int direction = msg->getDirection();
             std::string roadId = msg->getRoadId();
-            if (direction == RIGHT) {
+            if (direction == LEFT) {
                 if ((roadId == "1i" || roadId == "2i") && !is1Or2) {
                     allowedVs.push_back(msg);
                 }
-                else if ((roadId == "3i" || roadId == "4i") && is1Or2) {
+                else if ((roadId == "3i" || roadId == "4i") && !is3Or4) {
                     allowedVs.push_back(msg);
                 }
             }
         }
         return getVehicleIds(allowedVs);
     }
+
     //no one wanted to turn straight or right, check if anyone wants to turn left
     //only one person can go when trying to turn left at a time
+    bool haveSeen1 = false;
+    bool haveSeen2 = false;
+    bool haveSeen3 = false;
+    bool haveSeen4 = false;
     for(auto&& msg: vehicles) {
         int direction = msg->getDirection();
+        std::string roadId = msg->getRoadId();
         if (direction == LEFT) {
             allowedVs.push_back(msg);
-            break;
+            //will be used to get rid of ties
+            if (roadId == "1i") {
+                haveSeen1 = true;
+            }
+            else if (roadId == "2i") {
+                haveSeen2 = true;
+            }
+            else if (roadId == "3i") {
+                haveSeen3 = true;
+            }
+            else {
+                haveSeen4 = true;
+            }
         }
     }
-    return getVehicleIds(allowedVs);
+    std::string currPriority = "";
+    //if all four cars in intersection, break tie with left/right lane
+    if (haveSeen1 && haveSeen2 && haveSeen3 && haveSeen4) {
+        currPriority = "1i";
+    }
+    //priorities for vehicles
+    else if (haveSeen2 && !haveSeen4) {
+        currPriority = "2i";
+    }
+    else if (haveSeen1 && !haveSeen3) {
+        currPriority = "1i";
+    }
+    else if (haveSeen3 && !haveSeen2) {
+        currPriority = "3i";
+    }
+    else {
+        currPriority = "4i";
+    }
+    //figure out which lane got priority for left turns
+    std::vector<IntersectMessage*> returnedVehicles;
+    for(auto&& msg: allowedVs) {
+        std::string roadId = msg->getRoadId();
+        if (currPriority == roadId) {
+            returnedVehicles.push_back(msg);
+        }
+    }
+    return getVehicleIds(returnedVehicles);
 }
 
 //calculates which vehicles are allowed to go through intersection
@@ -395,6 +438,24 @@ void TutorialAppl::populateISM(IntersectMessage *ism, bool passed) {
     ism->setPassed(passed);
 }
 
+//this fxn does not work correctly and is probably not useful
+bool TutorialAppl::passedIntersection() {
+    Coord juncPos = traci->junction("0").getPosition();
+    Coord prevPos = mobility->getPositionAt(simTime() - 1);
+    Coord pos = mobility->getPositionAt(simTime());
+    std::string roadId = traciVehicle->getRoadId();
+
+    if (((pos.x-juncPos.x > 2.0) && prevPos.x < juncPos.x) ||
+        ((pos.x-juncPos.x < -2.0) && prevPos.x > juncPos.x) ||
+        ((pos.y-juncPos.y > 2.0) && prevPos.y < juncPos.y) ||
+        ((pos.y-juncPos.y < -2.0) && prevPos.y > juncPos.y)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 void TutorialAppl::handlePositionUpdate(cObject* obj) {
     BaseWaveApplLayer::handlePositionUpdate(obj);
     //cars send messages every 1 second
@@ -405,32 +466,36 @@ void TutorialAppl::handlePositionUpdate(cObject* obj) {
         double distance = pos.distance(juncPos);
         std::string roadId = traciVehicle->getRoadId();
         //if they cannot go through intersection, will slow down
-        if (distance <= 20.0 && !canGo) {
-            traciVehicle->slowDown(0, 1000);
+        if (!canGo && distance <= 60.0) {
+            traciVehicle->slowDown(0, 500);
         }
+        /*
+        if (distance<=90 && !canGo &&needToChange2) {
+            std::cout << "cri" << endl;
+            traciVehicle->stopAt(traciVehicle->getRoadId(),70,
+                                     traciVehicle->getLaneIndex(),50,0);
+            needToChange2 = false;
+        }
+        */
         //otherwise they will go through intersection
-        else if (canGo) {
-            traciVehicle->slowDown(20, 500);
+        else if (canGo && needToChange) {
+            //std::cout << "cri" << endl;
+            traciVehicle->slowDown(25, 500);
+            needToChange = false;
         }
 
         //create new msg to RSU and send it
         IntersectMessage* ism = new IntersectMessage();
         //if they have passed intersection they will let RSU know
 
-        std::cout << juncPos << endl;
-        std::cout << pos << endl;
-        std::cout << distance << endl;
-
-        if (roadId == "1o" || roadId == "2o" ||
-            roadId == "3o" || roadId == "4o") {
-            std::cout << "IM OUT" << endl;
+        if(roadId == "1o" || roadId == "2o" ||
+           roadId == "3o" || roadId == "4o") {
             populateISM(ism, true);
         }
         else if (roadId == "1i" || roadId == "2i" ||
                  roadId == "3i" || roadId == "4i") {
             populateISM(ism, false);
         }
-
         if (dataOnSch) {
             //schedule message to self to send later
             scheduleAt(computeAsynchronousSendingTime(1,type_SCH),ism);

@@ -1,14 +1,14 @@
 version 2
-run WithChannelSwitching-0-20190715-16:31:41-22488
+run WithChannelSwitching-0-20190717-11:47:24-12660
 attr configname WithChannelSwitching
-attr datetime 20190715-16:31:41
+attr datetime 20190717-11:47:24
 attr experiment WithChannelSwitching
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsf ""
 attr measurement ""
 attr network TutorialScenario
-attr processid 22488
+attr processid 12660
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -61,106 +61,133 @@ param *.node[*].veinsmobility.x 0
 param *.node[*].veinsmobility.y 0
 param *.node[*].veinsmobility.z 1.895
 
-scalar TutorialScenario.node[1].appl generatedWSMs 24
-scalar TutorialScenario.node[1].appl receivedWSMs 0
-scalar TutorialScenario.node[1].appl generatedBSMs 0
-scalar TutorialScenario.node[1].appl receivedBSMs 0
-scalar TutorialScenario.node[1].appl generatedWSAs 25
-scalar TutorialScenario.node[1].appl receivedWSAs 0
-scalar TutorialScenario.node[1].nic.phy80211p busyTime 0.00057792
-scalar TutorialScenario.node[1].nic.mac1609_4 ReceivedUnicastPackets 0
-scalar TutorialScenario.node[1].nic.mac1609_4 ReceivedBroadcasts 138
-scalar TutorialScenario.node[1].nic.mac1609_4 SentPackets 49
-scalar TutorialScenario.node[1].nic.mac1609_4 SentAcknowledgements 0
-scalar TutorialScenario.node[1].nic.mac1609_4 SNIRLostPackets 0
-scalar TutorialScenario.node[1].nic.mac1609_4 RXTXLostPackets 0
-scalar TutorialScenario.node[1].nic.mac1609_4 TotalLostPackets 0
-scalar TutorialScenario.node[1].nic.mac1609_4 DroppedPacketsInMac 0
-scalar TutorialScenario.node[1].nic.mac1609_4 TooLittleTime 0
-scalar TutorialScenario.node[1].nic.mac1609_4 TimesIntoBackoff 50
-scalar TutorialScenario.node[1].nic.mac1609_4 SlotsBackoff 79
-scalar TutorialScenario.node[1].nic.mac1609_4 NumInternalContention 0
-scalar TutorialScenario.node[1].nic.mac1609_4 totalBusyTime 0.020745
-scalar TutorialScenario.node[1].veinsmobility startTime 1
-scalar TutorialScenario.node[1].veinsmobility totalTime 24
-scalar TutorialScenario.node[1].veinsmobility stopTime 26
-scalar TutorialScenario.node[1].veinsmobility minSpeed 1.1921556821414
-scalar TutorialScenario.node[1].veinsmobility maxSpeed 17.379369144127
-scalar TutorialScenario.node[1].veinsmobility totalDistance 210.04278804984
-scalar TutorialScenario.node[1].veinsmobility totalCO2Emission 76.689757398172
-scalar TutorialScenario.node[0].appl generatedWSMs 24
-scalar TutorialScenario.node[0].appl receivedWSMs 0
-scalar TutorialScenario.node[0].appl generatedBSMs 0
-scalar TutorialScenario.node[0].appl receivedBSMs 0
-scalar TutorialScenario.node[0].appl generatedWSAs 25
-scalar TutorialScenario.node[0].appl receivedWSAs 0
-scalar TutorialScenario.node[0].nic.phy80211p busyTime 0.00057792
-scalar TutorialScenario.node[0].nic.mac1609_4 ReceivedUnicastPackets 0
-scalar TutorialScenario.node[0].nic.mac1609_4 ReceivedBroadcasts 138
-scalar TutorialScenario.node[0].nic.mac1609_4 SentPackets 49
-scalar TutorialScenario.node[0].nic.mac1609_4 SentAcknowledgements 0
-scalar TutorialScenario.node[0].nic.mac1609_4 SNIRLostPackets 0
-scalar TutorialScenario.node[0].nic.mac1609_4 RXTXLostPackets 0
-scalar TutorialScenario.node[0].nic.mac1609_4 TotalLostPackets 0
-scalar TutorialScenario.node[0].nic.mac1609_4 DroppedPacketsInMac 0
-scalar TutorialScenario.node[0].nic.mac1609_4 TooLittleTime 0
-scalar TutorialScenario.node[0].nic.mac1609_4 TimesIntoBackoff 52
-scalar TutorialScenario.node[0].nic.mac1609_4 SlotsBackoff 69
-scalar TutorialScenario.node[0].nic.mac1609_4 NumInternalContention 0
-scalar TutorialScenario.node[0].nic.mac1609_4 totalBusyTime 0.020745
-scalar TutorialScenario.node[0].veinsmobility startTime 1
-scalar TutorialScenario.node[0].veinsmobility totalTime 24
-scalar TutorialScenario.node[0].veinsmobility stopTime 26
-scalar TutorialScenario.node[0].veinsmobility minSpeed 1.2007012249744
-scalar TutorialScenario.node[0].veinsmobility maxSpeed 17.171255986824
-scalar TutorialScenario.node[0].veinsmobility totalDistance 207.76152346169
-scalar TutorialScenario.node[0].veinsmobility totalCO2Emission 75.573880478881
-scalar TutorialScenario.node[2].appl generatedWSMs 36
+scalar TutorialScenario.node[2].appl generatedWSMs 14
 scalar TutorialScenario.node[2].appl receivedWSMs 0
 scalar TutorialScenario.node[2].appl generatedBSMs 0
 scalar TutorialScenario.node[2].appl receivedBSMs 0
-scalar TutorialScenario.node[2].appl generatedWSAs 37
+scalar TutorialScenario.node[2].appl generatedWSAs 15
 scalar TutorialScenario.node[2].appl receivedWSAs 0
-scalar TutorialScenario.node[2].nic.phy80211p busyTime 0.00043156756756757
+scalar TutorialScenario.node[2].nic.phy80211p busyTime 0.00087306666666667
 scalar TutorialScenario.node[2].nic.mac1609_4 ReceivedUnicastPackets 0
-scalar TutorialScenario.node[2].nic.mac1609_4 ReceivedBroadcasts 158
-scalar TutorialScenario.node[2].nic.mac1609_4 SentPackets 73
+scalar TutorialScenario.node[2].nic.mac1609_4 ReceivedBroadcasts 111
+scalar TutorialScenario.node[2].nic.mac1609_4 SentPackets 29
 scalar TutorialScenario.node[2].nic.mac1609_4 SentAcknowledgements 0
 scalar TutorialScenario.node[2].nic.mac1609_4 SNIRLostPackets 0
 scalar TutorialScenario.node[2].nic.mac1609_4 RXTXLostPackets 0
 scalar TutorialScenario.node[2].nic.mac1609_4 TotalLostPackets 0
 scalar TutorialScenario.node[2].nic.mac1609_4 DroppedPacketsInMac 0
 scalar TutorialScenario.node[2].nic.mac1609_4 TooLittleTime 0
-scalar TutorialScenario.node[2].nic.mac1609_4 TimesIntoBackoff 77
-scalar TutorialScenario.node[2].nic.mac1609_4 SlotsBackoff 103
+scalar TutorialScenario.node[2].nic.mac1609_4 TimesIntoBackoff 29
+scalar TutorialScenario.node[2].nic.mac1609_4 SlotsBackoff 45
 scalar TutorialScenario.node[2].nic.mac1609_4 NumInternalContention 0
-scalar TutorialScenario.node[2].nic.mac1609_4 totalBusyTime 0.025289
+scalar TutorialScenario.node[2].nic.mac1609_4 totalBusyTime 0.016781
 scalar TutorialScenario.node[2].veinsmobility startTime 1
-scalar TutorialScenario.node[2].veinsmobility totalTime 36
-scalar TutorialScenario.node[2].veinsmobility stopTime 38
-scalar TutorialScenario.node[2].veinsmobility minSpeed 0.11126591276552
-scalar TutorialScenario.node[2].veinsmobility maxSpeed 12.44327432559
-scalar TutorialScenario.node[2].veinsmobility totalDistance 206.88012481675
-scalar TutorialScenario.node[2].veinsmobility totalCO2Emission 82.412533731732
+scalar TutorialScenario.node[2].veinsmobility totalTime 14
+scalar TutorialScenario.node[2].veinsmobility stopTime 16
+scalar TutorialScenario.node[2].veinsmobility minSpeed 3.7214935264462
+scalar TutorialScenario.node[2].veinsmobility maxSpeed 20.361644620589
+scalar TutorialScenario.node[2].veinsmobility totalDistance 199.51799088654
+scalar TutorialScenario.node[2].veinsmobility totalCO2Emission 80.480431564038
+scalar TutorialScenario.node[3].appl generatedWSMs 14
+scalar TutorialScenario.node[3].appl receivedWSMs 0
+scalar TutorialScenario.node[3].appl generatedBSMs 0
+scalar TutorialScenario.node[3].appl receivedBSMs 0
+scalar TutorialScenario.node[3].appl generatedWSAs 15
+scalar TutorialScenario.node[3].appl receivedWSAs 0
+scalar TutorialScenario.node[3].nic.phy80211p busyTime 0.00087306666666667
+scalar TutorialScenario.node[3].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar TutorialScenario.node[3].nic.mac1609_4 ReceivedBroadcasts 111
+scalar TutorialScenario.node[3].nic.mac1609_4 SentPackets 29
+scalar TutorialScenario.node[3].nic.mac1609_4 SentAcknowledgements 0
+scalar TutorialScenario.node[3].nic.mac1609_4 SNIRLostPackets 0
+scalar TutorialScenario.node[3].nic.mac1609_4 RXTXLostPackets 0
+scalar TutorialScenario.node[3].nic.mac1609_4 TotalLostPackets 0
+scalar TutorialScenario.node[3].nic.mac1609_4 DroppedPacketsInMac 0
+scalar TutorialScenario.node[3].nic.mac1609_4 TooLittleTime 0
+scalar TutorialScenario.node[3].nic.mac1609_4 TimesIntoBackoff 31
+scalar TutorialScenario.node[3].nic.mac1609_4 SlotsBackoff 45
+scalar TutorialScenario.node[3].nic.mac1609_4 NumInternalContention 0
+scalar TutorialScenario.node[3].nic.mac1609_4 totalBusyTime 0.016781
+scalar TutorialScenario.node[3].veinsmobility startTime 1
+scalar TutorialScenario.node[3].veinsmobility totalTime 14
+scalar TutorialScenario.node[3].veinsmobility stopTime 16
+scalar TutorialScenario.node[3].veinsmobility minSpeed 4.1536464034875
+scalar TutorialScenario.node[3].veinsmobility maxSpeed 19.994070097315
+scalar TutorialScenario.node[3].veinsmobility totalDistance 198.27268259734
+scalar TutorialScenario.node[3].veinsmobility totalCO2Emission 79.707899587806
+scalar TutorialScenario.node[1].appl generatedWSMs 22
+scalar TutorialScenario.node[1].appl receivedWSMs 0
+scalar TutorialScenario.node[1].appl generatedBSMs 0
+scalar TutorialScenario.node[1].appl receivedBSMs 0
+scalar TutorialScenario.node[1].appl generatedWSAs 23
+scalar TutorialScenario.node[1].appl receivedWSAs 0
+scalar TutorialScenario.node[1].nic.phy80211p busyTime 0.00066295652173913
+scalar TutorialScenario.node[1].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar TutorialScenario.node[1].nic.mac1609_4 ReceivedBroadcasts 139
+scalar TutorialScenario.node[1].nic.mac1609_4 SentPackets 45
+scalar TutorialScenario.node[1].nic.mac1609_4 SentAcknowledgements 0
+scalar TutorialScenario.node[1].nic.mac1609_4 SNIRLostPackets 0
+scalar TutorialScenario.node[1].nic.mac1609_4 RXTXLostPackets 0
+scalar TutorialScenario.node[1].nic.mac1609_4 TotalLostPackets 0
+scalar TutorialScenario.node[1].nic.mac1609_4 DroppedPacketsInMac 0
+scalar TutorialScenario.node[1].nic.mac1609_4 TooLittleTime 0
+scalar TutorialScenario.node[1].nic.mac1609_4 TimesIntoBackoff 46
+scalar TutorialScenario.node[1].nic.mac1609_4 SlotsBackoff 72
+scalar TutorialScenario.node[1].nic.mac1609_4 NumInternalContention 0
+scalar TutorialScenario.node[1].nic.mac1609_4 totalBusyTime 0.021501
+scalar TutorialScenario.node[1].veinsmobility startTime 1
+scalar TutorialScenario.node[1].veinsmobility totalTime 22
+scalar TutorialScenario.node[1].veinsmobility stopTime 24
+scalar TutorialScenario.node[1].veinsmobility minSpeed 1.7987312458176
+scalar TutorialScenario.node[1].veinsmobility maxSpeed 19.876256318281
+scalar TutorialScenario.node[1].veinsmobility totalDistance 202.71801725468
+scalar TutorialScenario.node[1].veinsmobility totalCO2Emission 106.55626382651
+scalar TutorialScenario.node[0].appl generatedWSMs 27
+scalar TutorialScenario.node[0].appl receivedWSMs 0
+scalar TutorialScenario.node[0].appl generatedBSMs 0
+scalar TutorialScenario.node[0].appl receivedBSMs 0
+scalar TutorialScenario.node[0].appl generatedWSAs 28
+scalar TutorialScenario.node[0].appl receivedWSAs 0
+scalar TutorialScenario.node[0].nic.phy80211p busyTime 0.000576
+scalar TutorialScenario.node[0].nic.mac1609_4 ReceivedUnicastPackets 0
+scalar TutorialScenario.node[0].nic.mac1609_4 ReceivedBroadcasts 148
+scalar TutorialScenario.node[0].nic.mac1609_4 SentPackets 55
+scalar TutorialScenario.node[0].nic.mac1609_4 SentAcknowledgements 0
+scalar TutorialScenario.node[0].nic.mac1609_4 SNIRLostPackets 0
+scalar TutorialScenario.node[0].nic.mac1609_4 RXTXLostPackets 0
+scalar TutorialScenario.node[0].nic.mac1609_4 TotalLostPackets 0
+scalar TutorialScenario.node[0].nic.mac1609_4 DroppedPacketsInMac 0
+scalar TutorialScenario.node[0].nic.mac1609_4 TooLittleTime 0
+scalar TutorialScenario.node[0].nic.mac1609_4 TimesIntoBackoff 57
+scalar TutorialScenario.node[0].nic.mac1609_4 SlotsBackoff 84
+scalar TutorialScenario.node[0].nic.mac1609_4 NumInternalContention 0
+scalar TutorialScenario.node[0].nic.mac1609_4 totalBusyTime 0.023503
+scalar TutorialScenario.node[0].veinsmobility startTime 1
+scalar TutorialScenario.node[0].veinsmobility totalTime 27
+scalar TutorialScenario.node[0].veinsmobility stopTime 29
+scalar TutorialScenario.node[0].veinsmobility minSpeed 0.96238944091371
+scalar TutorialScenario.node[0].veinsmobility maxSpeed 20.383363309386
+scalar TutorialScenario.node[0].veinsmobility totalDistance 209.65779312713
+scalar TutorialScenario.node[0].veinsmobility totalCO2Emission 117.995927421
 scalar TutorialScenario.manager roiArea 0
-scalar TutorialScenario.rsu[0].appl generatedWSMs 23
+scalar TutorialScenario.rsu[0].appl generatedWSMs 17
 scalar TutorialScenario.rsu[0].appl receivedWSMs 0
 scalar TutorialScenario.rsu[0].appl generatedBSMs 0
 scalar TutorialScenario.rsu[0].appl receivedBSMs 0
 scalar TutorialScenario.rsu[0].appl generatedWSAs 1000
 scalar TutorialScenario.rsu[0].appl receivedWSAs 0
-scalar TutorialScenario.rsu[0].nic.phy80211p busyTime 2.1744e-005
+scalar TutorialScenario.rsu[0].nic.phy80211p busyTime 2.084e-005
 scalar TutorialScenario.rsu[0].nic.mac1609_4 ReceivedUnicastPackets 0
-scalar TutorialScenario.rsu[0].nic.mac1609_4 ReceivedBroadcasts 171
-scalar TutorialScenario.rsu[0].nic.mac1609_4 SentPackets 1023
+scalar TutorialScenario.rsu[0].nic.mac1609_4 ReceivedBroadcasts 158
+scalar TutorialScenario.rsu[0].nic.mac1609_4 SentPackets 1017
 scalar TutorialScenario.rsu[0].nic.mac1609_4 SentAcknowledgements 0
 scalar TutorialScenario.rsu[0].nic.mac1609_4 SNIRLostPackets 0
 scalar TutorialScenario.rsu[0].nic.mac1609_4 RXTXLostPackets 0
 scalar TutorialScenario.rsu[0].nic.mac1609_4 TotalLostPackets 0
 scalar TutorialScenario.rsu[0].nic.mac1609_4 DroppedPacketsInMac 0
 scalar TutorialScenario.rsu[0].nic.mac1609_4 TooLittleTime 0
-scalar TutorialScenario.rsu[0].nic.mac1609_4 TimesIntoBackoff 1023
-scalar TutorialScenario.rsu[0].nic.mac1609_4 SlotsBackoff 1554
+scalar TutorialScenario.rsu[0].nic.mac1609_4 TimesIntoBackoff 1017
+scalar TutorialScenario.rsu[0].nic.mac1609_4 SlotsBackoff 1524
 scalar TutorialScenario.rsu[0].nic.mac1609_4 NumInternalContention 0
-scalar TutorialScenario.rsu[0].nic.mac1609_4 totalBusyTime 0.087871
+scalar TutorialScenario.rsu[0].nic.mac1609_4 totalBusyTime 0.086673
 

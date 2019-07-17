@@ -26,8 +26,11 @@ class TutorialAppl : public BaseWaveApplLayer {
 
         //Vehicles
         bool canGo; //if the car can go through intersection
+        bool needToChange; //if car has already changed speeds or not
+        bool needToChange2; //cry
         virtual void onRSM(RSUMessage *rsm);
         int getDirection(std::string currRoad, std::string nextRoad);
+        bool passedIntersection();
         void populateISM(IntersectMessage *ism, bool passed);
         virtual void handlePositionUpdate(cObject* obj);
 
