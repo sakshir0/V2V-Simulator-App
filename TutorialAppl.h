@@ -14,6 +14,7 @@ class TutorialAppl : public BaseWaveApplLayer {
     protected:
         ~TutorialAppl();
         //RSU
+        simtime_t delayTimeRSU = 0;
         simtime_t lastSentRSU; //last time RSU sent msg
         std::vector<IntersectMessage*> RSUData;
         virtual void onISM(IntersectMessage* wsm);
@@ -25,9 +26,10 @@ class TutorialAppl : public BaseWaveApplLayer {
         std::list<const char*> calculateAllowedVehicles();
 
         //Vehicles
+        simtime_t delayTimeCars = 0;
         bool canGo; //if the car can go through intersection
         bool needToChange; //if car has already changed speeds or not
-        bool needToChange2; //cry
+        bool needToChange2;  //delete later
         virtual void onRSM(RSUMessage *rsm);
         int getDirection(std::string currRoad, std::string nextRoad);
         bool passedIntersection();

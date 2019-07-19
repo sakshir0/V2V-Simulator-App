@@ -215,6 +215,7 @@ IntersectMessage& IntersectMessage::operator=(const IntersectMessage& other)
 void IntersectMessage::copy(const IntersectMessage& other)
 {
     this->vehicleId = other.vehicleId;
+    this->vehicleType = other.vehicleType;
     this->senderSpeed = other.senderSpeed;
     this->senderPos = other.senderPos;
     this->timeSent = other.timeSent;
@@ -227,6 +228,7 @@ void IntersectMessage::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::WaveShortMessage::parsimPack(b);
     doParsimPacking(b,this->vehicleId);
+    doParsimPacking(b,this->vehicleType);
     doParsimPacking(b,this->senderSpeed);
     doParsimPacking(b,this->senderPos);
     doParsimPacking(b,this->timeSent);
@@ -239,6 +241,7 @@ void IntersectMessage::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::WaveShortMessage::parsimUnpack(b);
     doParsimUnpacking(b,this->vehicleId);
+    doParsimUnpacking(b,this->vehicleType);
     doParsimUnpacking(b,this->senderSpeed);
     doParsimUnpacking(b,this->senderPos);
     doParsimUnpacking(b,this->timeSent);
@@ -255,6 +258,16 @@ const char * IntersectMessage::getVehicleId() const
 void IntersectMessage::setVehicleId(const char * vehicleId)
 {
     this->vehicleId = vehicleId;
+}
+
+const char * IntersectMessage::getVehicleType() const
+{
+    return this->vehicleType.c_str();
+}
+
+void IntersectMessage::setVehicleType(const char * vehicleType)
+{
+    this->vehicleType = vehicleType;
 }
 
 double IntersectMessage::getSenderSpeed() const
@@ -382,7 +395,7 @@ const char *IntersectMessageDescriptor::getProperty(const char *propertyname) co
 int IntersectMessageDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
-    return basedesc ? 7+basedesc->getFieldCount() : 7;
+    return basedesc ? 8+basedesc->getFieldCount() : 8;
 }
 
 unsigned int IntersectMessageDescriptor::getFieldTypeFlags(int field) const
@@ -396,13 +409,14 @@ unsigned int IntersectMessageDescriptor::getFieldTypeFlags(int field) const
     static unsigned int fieldTypeFlags[] = {
         FD_ISEDITABLE,
         FD_ISEDITABLE,
+        FD_ISEDITABLE,
         FD_ISCOMPOUND,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
         FD_ISEDITABLE,
     };
-    return (field>=0 && field<7) ? fieldTypeFlags[field] : 0;
+    return (field>=0 && field<8) ? fieldTypeFlags[field] : 0;
 }
 
 const char *IntersectMessageDescriptor::getFieldName(int field) const
@@ -415,6 +429,7 @@ const char *IntersectMessageDescriptor::getFieldName(int field) const
     }
     static const char *fieldNames[] = {
         "vehicleId",
+        "vehicleType",
         "senderSpeed",
         "senderPos",
         "timeSent",
@@ -422,7 +437,7 @@ const char *IntersectMessageDescriptor::getFieldName(int field) const
         "direction",
         "passed",
     };
-    return (field>=0 && field<7) ? fieldNames[field] : nullptr;
+    return (field>=0 && field<8) ? fieldNames[field] : nullptr;
 }
 
 int IntersectMessageDescriptor::findField(const char *fieldName) const
@@ -430,12 +445,13 @@ int IntersectMessageDescriptor::findField(const char *fieldName) const
     omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
     int base = basedesc ? basedesc->getFieldCount() : 0;
     if (fieldName[0]=='v' && strcmp(fieldName, "vehicleId")==0) return base+0;
-    if (fieldName[0]=='s' && strcmp(fieldName, "senderSpeed")==0) return base+1;
-    if (fieldName[0]=='s' && strcmp(fieldName, "senderPos")==0) return base+2;
-    if (fieldName[0]=='t' && strcmp(fieldName, "timeSent")==0) return base+3;
-    if (fieldName[0]=='r' && strcmp(fieldName, "roadId")==0) return base+4;
-    if (fieldName[0]=='d' && strcmp(fieldName, "direction")==0) return base+5;
-    if (fieldName[0]=='p' && strcmp(fieldName, "passed")==0) return base+6;
+    if (fieldName[0]=='v' && strcmp(fieldName, "vehicleType")==0) return base+1;
+    if (fieldName[0]=='s' && strcmp(fieldName, "senderSpeed")==0) return base+2;
+    if (fieldName[0]=='s' && strcmp(fieldName, "senderPos")==0) return base+3;
+    if (fieldName[0]=='t' && strcmp(fieldName, "timeSent")==0) return base+4;
+    if (fieldName[0]=='r' && strcmp(fieldName, "roadId")==0) return base+5;
+    if (fieldName[0]=='d' && strcmp(fieldName, "direction")==0) return base+6;
+    if (fieldName[0]=='p' && strcmp(fieldName, "passed")==0) return base+7;
     return basedesc ? basedesc->findField(fieldName) : -1;
 }
 
@@ -449,6 +465,7 @@ const char *IntersectMessageDescriptor::getFieldTypeString(int field) const
     }
     static const char *fieldTypeStrings[] = {
         "string",
+        "string",
         "double",
         "Coord",
         "simtime_t",
@@ -456,7 +473,7 @@ const char *IntersectMessageDescriptor::getFieldTypeString(int field) const
         "int",
         "bool",
     };
-    return (field>=0 && field<7) ? fieldTypeStrings[field] : nullptr;
+    return (field>=0 && field<8) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **IntersectMessageDescriptor::getFieldPropertyNames(int field) const
@@ -468,7 +485,7 @@ const char **IntersectMessageDescriptor::getFieldPropertyNames(int field) const
         field -= basedesc->getFieldCount();
     }
     switch (field) {
-        case 5: {
+        case 6: {
             static const char *names[] = { "enum",  nullptr };
             return names;
         }
@@ -485,7 +502,7 @@ const char *IntersectMessageDescriptor::getFieldProperty(int field, const char *
         field -= basedesc->getFieldCount();
     }
     switch (field) {
-        case 5:
+        case 6:
             if (!strcmp(propertyname,"enum")) return "directionType";
             return nullptr;
         default: return nullptr;
@@ -531,12 +548,13 @@ std::string IntersectMessageDescriptor::getFieldValueAsString(void *object, int 
     IntersectMessage *pp = (IntersectMessage *)object; (void)pp;
     switch (field) {
         case 0: return oppstring2string(pp->getVehicleId());
-        case 1: return double2string(pp->getSenderSpeed());
-        case 2: {std::stringstream out; out << pp->getSenderPos(); return out.str();}
-        case 3: return simtime2string(pp->getTimeSent());
-        case 4: return oppstring2string(pp->getRoadId());
-        case 5: return enum2string(pp->getDirection(), "directionType");
-        case 6: return bool2string(pp->getPassed());
+        case 1: return oppstring2string(pp->getVehicleType());
+        case 2: return double2string(pp->getSenderSpeed());
+        case 3: {std::stringstream out; out << pp->getSenderPos(); return out.str();}
+        case 4: return simtime2string(pp->getTimeSent());
+        case 5: return oppstring2string(pp->getRoadId());
+        case 6: return enum2string(pp->getDirection(), "directionType");
+        case 7: return bool2string(pp->getPassed());
         default: return "";
     }
 }
@@ -552,11 +570,12 @@ bool IntersectMessageDescriptor::setFieldValueAsString(void *object, int field, 
     IntersectMessage *pp = (IntersectMessage *)object; (void)pp;
     switch (field) {
         case 0: pp->setVehicleId((value)); return true;
-        case 1: pp->setSenderSpeed(string2double(value)); return true;
-        case 3: pp->setTimeSent(string2simtime(value)); return true;
-        case 4: pp->setRoadId((value)); return true;
-        case 5: pp->setDirection((directionType)string2enum(value, "directionType")); return true;
-        case 6: pp->setPassed(string2bool(value)); return true;
+        case 1: pp->setVehicleType((value)); return true;
+        case 2: pp->setSenderSpeed(string2double(value)); return true;
+        case 4: pp->setTimeSent(string2simtime(value)); return true;
+        case 5: pp->setRoadId((value)); return true;
+        case 6: pp->setDirection((directionType)string2enum(value, "directionType")); return true;
+        case 7: pp->setPassed(string2bool(value)); return true;
         default: return false;
     }
 }
@@ -570,7 +589,7 @@ const char *IntersectMessageDescriptor::getFieldStructName(int field) const
         field -= basedesc->getFieldCount();
     }
     switch (field) {
-        case 2: return omnetpp::opp_typename(typeid(Coord));
+        case 3: return omnetpp::opp_typename(typeid(Coord));
         default: return nullptr;
     };
 }
@@ -585,7 +604,7 @@ void *IntersectMessageDescriptor::getFieldStructValuePointer(void *object, int f
     }
     IntersectMessage *pp = (IntersectMessage *)object; (void)pp;
     switch (field) {
-        case 2: return (void *)(&pp->getSenderPos()); break;
+        case 3: return (void *)(&pp->getSenderPos()); break;
         default: return nullptr;
     }
 }

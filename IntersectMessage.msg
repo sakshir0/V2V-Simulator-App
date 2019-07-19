@@ -14,6 +14,7 @@ enum directionType {
 
 packet IntersectMessage extends WaveShortMessage {
 	string vehicleId;
+	string vehicleType;
 	double senderSpeed;
 	Coord senderPos;
 	simtime_t timeSent;

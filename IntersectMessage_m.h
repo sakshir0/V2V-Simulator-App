@@ -47,6 +47,7 @@ enum directionType {
  * packet IntersectMessage extends WaveShortMessage
  * {
  *     string vehicleId;
+ *     string vehicleType;
  *     double senderSpeed;
  *     Coord senderPos;
  *     simtime_t timeSent;
@@ -60,6 +61,7 @@ class IntersectMessage : public ::WaveShortMessage
 {
   protected:
     ::omnetpp::opp_string vehicleId;
+    ::omnetpp::opp_string vehicleType;
     double senderSpeed;
     Coord senderPos;
     ::omnetpp::simtime_t timeSent;
@@ -86,6 +88,8 @@ class IntersectMessage : public ::WaveShortMessage
     // field getter/setter methods
     virtual const char * getVehicleId() const;
     virtual void setVehicleId(const char * vehicleId);
+    virtual const char * getVehicleType() const;
+    virtual void setVehicleType(const char * vehicleType);
     virtual double getSenderSpeed() const;
     virtual void setSenderSpeed(double senderSpeed);
     virtual Coord& getSenderPos();

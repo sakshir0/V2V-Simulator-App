@@ -44,7 +44,6 @@ TutorialAppl::~TutorialAppl() {
 
 void TutorialAppl::onISM(IntersectMessage* ism) {
     if (isRSU && ((ism->getVehicleId())[0] != '\0')) {
-        //std::cout << "cri1" << std::endl;
         findHost()->getDisplayString().updateWith("r=16,green");
         //if car has not yet passed intersection update info for RSU, o/w delete info
         if (!(ism->getPassed())) {
@@ -54,6 +53,7 @@ void TutorialAppl::onISM(IntersectMessage* ism) {
         else {
             removeData(ism);
         }
+        std::cout << "cri1" << std::endl;
         //every second, calculate who is allowed to go for RSU and send msg
         //start should also have cars send at same sim time as that is how it is set in SUMO
         if ((simTime() - lastSentRSU >= 1) && simTime() > 6.0) {
@@ -65,7 +65,7 @@ void TutorialAppl::onISM(IntersectMessage* ism) {
                 rsm->setAllowedVehicles(i, allowed);
                 ++i;
             }
-            sendDown(rsm);
+            sendDelayedDown(rsm, delayTimeRSU);
             lastSentRSU = simTime();
         }
     }
@@ -191,6 +191,16 @@ std::list<const char*> TutorialAppl::getVehicleIds(std::vector<IntersectMessage*
 //straight over turning and right over left
 std::list<const char*> TutorialAppl::priorityCars(std::vector<IntersectMessage*> vehicles) {
     std::vector<IntersectMessage*> allowedVs;
+    //if there is an emergency vehicle, it gets priority over everyone
+    //no one else goes through intersection while it goes
+    for (auto&&msg: vehicles) {
+        std::string vehicleType = msg->getVehicleType();
+        if (vehicleType == "emergency") {
+            allowedVs.push_back(msg);
+        }
+    }
+    if (!allowedVs.empty()) return getVehicleIds(allowedVs);
+
     //if anyone wants to go straight, they get first priority
     for(auto&& msg: vehicles) {
         int direction = msg->getDirection();
@@ -203,12 +213,6 @@ std::list<const char*> TutorialAppl::priorityCars(std::vector<IntersectMessage*>
 
     //if there are multiple people who wanted to go straight, we yield to right
     allowedVs = yieldToRight(allowedVs);
-    /*
-    for(auto&& msg: allowedVs) {
-        std::cout << msg->getVehicleId() << endl;
-    }
-    std::cout << "allowedVs end" << endl;
-     */
 
     //we can allow anyone who wants to turn right in same direction
     //as people going straight to go
@@ -340,6 +344,38 @@ std::list<const char*> TutorialAppl::calculateAllowedVehicles() {
             it++;
         }
         allowedVehicles = priorityCars(vehicleMsgs);
+
+        /*
+        //check next time step if we have satisfied everyone in this time step
+        //this is way to improve RSU performance. is not required
+        //checks if we have satisfied all vehicles waiting to go at this time step
+        bool canGo = false;
+        bool canCheckNextTimeStep = true;
+        for (auto&& id: allowedVehicles) {
+            for (auto&& msg: vehicleMsgs) {
+                std::string vehicleId = msg->getVehicleId();
+                if (id == vehicleId) {
+                    canGo = true;
+                }
+            }
+            if (!canGo) {
+                canCheckNextTimeStep = false;
+                break;
+            }
+            canGo = false;
+        }
+        //if we have satisfied all vehicles at this time step, we can check next time step
+        //to see if we can let anyone go
+        if (canCheckNextTimeStep) {
+            //get all vehicles trying to go at next time step
+            std::vector<IntersectMessage*> nextVehicleMsgs;
+            auto it = RSUData.begin();
+            while (it != RSUData.end() && ((*it)->getTimeSent() - earliest - 1) < 0.01) {
+                nextVehicleMsgs.push_back((*it));
+                it++;
+            }
+
+        }*/
         return allowedVehicles;
     }
     //no one wants to go, return empty list
@@ -430,6 +466,7 @@ void TutorialAppl::populateISM(IntersectMessage *ism, bool passed) {
 
     //sets fields in message and returns
     ism->setVehicleId(mobility->getExternalId().c_str());
+    ism->setVehicleType(traciVehicle->getTypeId().c_str());
     ism->setTimeSent(simTime());
     ism->setSenderSpeed(speed);
     ism->setSenderPos(pos);
@@ -498,11 +535,14 @@ void TutorialAppl::handlePositionUpdate(cObject* obj) {
         }
         if (dataOnSch) {
             //schedule message to self to send later
+            std::cout << "async" << endl;
             scheduleAt(computeAsynchronousSendingTime(1,type_SCH),ism);
         }
         else {
-            //send right away on CCH, because channel switching is disabled
-            sendDown(ism);
+            //send on CCH, because channel switching is disabled. with specified delay
+            std::cout << "cri" << endl;
+            simtime_t delayTimeCars = par("delayTimeCars");
+            sendDelayedDown(ism, delayTimeCars);
         }
         lastSent = simTime();
     }
