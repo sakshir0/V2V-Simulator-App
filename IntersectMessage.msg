@@ -1,10 +1,8 @@
 cplusplus {{ 
-#include "veins/base/utils/Coord.h"
 #include "veins/modules/messages/WaveShortMessage_m.h"
 }}
 
 class WaveShortMessage;
-class noncobject Coord;
 
 enum directionType {
 	STRAIGHT = 0;
@@ -15,8 +13,6 @@ enum directionType {
 packet IntersectMessage extends WaveShortMessage {
 	string vehicleId;
 	string vehicleType;
-	double senderSpeed;
-	Coord senderPos;
 	simtime_t timeSent;
 	string roadId; //what road the car is currently on
 	int direction @enum(directionType); //direction car wants to go

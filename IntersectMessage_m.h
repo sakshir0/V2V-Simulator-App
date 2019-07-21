@@ -20,12 +20,11 @@
 
 // cplusplus {{
  
-#include "veins/base/utils/Coord.h"
 #include "veins/modules/messages/WaveShortMessage_m.h"
 // }}
 
 /**
- * Enum generated from <tt>IntersectMessage.msg:9</tt> by nedtool.
+ * Enum generated from <tt>IntersectMessage.msg:7</tt> by nedtool.
  * <pre>
  * enum directionType
  * {
@@ -42,14 +41,12 @@ enum directionType {
 };
 
 /**
- * Class generated from <tt>IntersectMessage.msg:15</tt> by nedtool.
+ * Class generated from <tt>IntersectMessage.msg:13</tt> by nedtool.
  * <pre>
  * packet IntersectMessage extends WaveShortMessage
  * {
  *     string vehicleId;
  *     string vehicleType;
- *     double senderSpeed;
- *     Coord senderPos;
  *     simtime_t timeSent;
  *     string roadId; //what road the car is currently on
  *     int direction \@enum(directionType); //direction car wants to go
@@ -62,8 +59,6 @@ class IntersectMessage : public ::WaveShortMessage
   protected:
     ::omnetpp::opp_string vehicleId;
     ::omnetpp::opp_string vehicleType;
-    double senderSpeed;
-    Coord senderPos;
     ::omnetpp::simtime_t timeSent;
     ::omnetpp::opp_string roadId;
     int direction;
@@ -90,11 +85,6 @@ class IntersectMessage : public ::WaveShortMessage
     virtual void setVehicleId(const char * vehicleId);
     virtual const char * getVehicleType() const;
     virtual void setVehicleType(const char * vehicleType);
-    virtual double getSenderSpeed() const;
-    virtual void setSenderSpeed(double senderSpeed);
-    virtual Coord& getSenderPos();
-    virtual const Coord& getSenderPos() const {return const_cast<IntersectMessage*>(this)->getSenderPos();}
-    virtual void setSenderPos(const Coord& senderPos);
     virtual ::omnetpp::simtime_t getTimeSent() const;
     virtual void setTimeSent(::omnetpp::simtime_t timeSent);
     virtual const char * getRoadId() const;

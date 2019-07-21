@@ -21,23 +21,21 @@ class TutorialAppl : public BaseWaveApplLayer {
         virtual void addData(IntersectMessage* ism);
         virtual void removeData(IntersectMessage* ism);
         std::vector<IntersectMessage*> yieldToRight(std::vector<IntersectMessage*> vehicles);
+        std::vector<IntersectMessage*> yieldToRightLeftTurns(std::vector<IntersectMessage*> vehicles);
         std::list<const char*> getVehicleIds(std::vector<IntersectMessage*> vehicles);
         std::list<const char*> priorityCars(std::vector<IntersectMessage*> vehicles);
         std::list<const char*> calculateAllowedVehicles();
 
         //Vehicles
         simtime_t delayTimeCars = 0;
+        simtime_t lastSent; // the last time car sent a message
         bool canGo; //if the car can go through intersection
-        bool needToChange; //if car has already changed speeds or not
-        bool needToChange2;  //delete later
         virtual void onRSM(RSUMessage *rsm);
         int getDirection(std::string currRoad, std::string nextRoad);
-        bool passedIntersection();
         void populateISM(IntersectMessage *ism, bool passed);
         virtual void handlePositionUpdate(cObject* obj);
 
         //General
-        simtime_t lastSent; // the last time car sent a message
         bool isRSU; //if it is an RSU or a car
         virtual void handleSelfMsg(cMessage* msg);
         virtual void handleLowerMsg(cMessage *msg);

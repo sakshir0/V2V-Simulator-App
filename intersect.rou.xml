@@ -23,10 +23,9 @@
         <route id="LeftFromDown" edges="53o 3i 1o 51i" />
         
 		<!--vehicles-->
-	    <vehicle id="rightFromLeft0" type="emergency" route="rightFromLeft" depart="0" />
-        <vehicle id="LeftFromRight0" type="fast" route="LeftFromRight" depart="0" />
+	    <vehicle id="rightFromLeft0" type="fast" route="rightFromLeft" depart="0" />
         <vehicle id="LeftFromUp0" type="fast" route="LeftFromUp" depart="0" />
-        <vehicle id="rightFromDown0" type="fast" route="rightFromDown" depart="0" />
+        <vehicle id="LeftFromDown0" type="fast" route="LeftFromDown" depart="0" /> 
         
         <!--straight routes-->
         <!--
