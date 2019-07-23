@@ -1,5 +1,5 @@
-#ifndef TUTORIALAPPL_H_
-#define TUTORIALAPPL_H_
+#ifndef INTERSECTIONAPP_H_
+#define INTERSECTIONAPP_H_
 
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 #include "IntersectMessage_m.h"
@@ -12,7 +12,7 @@ class IntersectionApp : public BaseWaveApplLayer {
     public:
         virtual void initialize(int stage);
     protected:
-        ~TutorialAppl();
+        ~IntersectionApp();
         //RSU
         simtime_t delayTimeRSU = 0;
         simtime_t lastSentRSU; //last time RSU sent msg

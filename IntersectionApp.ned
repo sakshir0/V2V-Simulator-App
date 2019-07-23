@@ -15,7 +15,7 @@
 
 import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
 
-simple IntersectionApplLayer extends BaseWaveApplLayer
+simple IntersectionApp extends BaseWaveApplLayer
 {
 	//declarations go here
 	@class(IntersectionApp);
