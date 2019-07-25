@@ -24,7 +24,7 @@
         
 		<!--vehicles-->
 	    <vehicle id="rightFromLeft0" type="fast" route="rightFromLeft" depart="0" />
-        <vehicle id="LeftFromUp0" type="fast" route="LeftFromUp" depart="0" />
+        <vehicle id="LeftFromUp0" type="emergency" route="LeftFromUp" depart="0" />
         <vehicle id="LeftFromDown0" type="fast" route="LeftFromDown" depart="0" /> 
         <vehicle id="straightFromLeft0" type="fast" route="straightFromLeft" depart="1" />
         
